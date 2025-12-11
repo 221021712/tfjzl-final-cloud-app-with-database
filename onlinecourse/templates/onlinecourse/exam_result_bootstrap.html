@@ -7,15 +7,14 @@
 </head>
 <body>
 
- <nav class="navbar navbar-light bg-light">
+<nav class="navbar navbar-light bg-light">
     <div class="container-fluid">
-        <div class="navbar-header">
-              <a class="navbar-brand" href="{% url 'onlinecourse:index' %}">Home</a>
-        </div>
+        <a class="navbar-brand" href="{% url 'onlinecourse:index' %}">Home</a>
+
         <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
             <li>
-                <a class="btn btn-link" href="#">{{ user.first_name }}({{ user.username }})</a>
+                <a class="btn btn-link">{{ user.first_name }} ({{ user.username }})</a>
                 <a class="btn btn-link" href="{% url 'onlinecourse:logout' %}">Logout</a>
             </li>
             {% else %}
@@ -23,8 +22,8 @@
                 <form class="form-inline" action="{% url 'onlinecourse:login' %}" method="post">
                     {% csrf_token %}
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Username" name="username" >
-                        <input type="password" class="form-control" placeholder="Password" name="psw" >
+                        <input type="text" class="form-control" placeholder="Username" name="username">
+                        <input type="password" class="form-control" placeholder="Password" name="psw">
                         <button class="btn btn-primary" type="submit">Login</button>
                         <a class="btn btn-link" href="{% url 'onlinecourse:registration' %}">Sign Up</a>
                     </div>
@@ -35,42 +34,48 @@
     </div>
 </nav>
 
-<div class="container-fluid">
-    {% if grade >= 80 %}
-    <div class="alert alert-success">
-        <b>Congratulations, {{ user.first_name }}!</b> You have passed the exam and completed the course with score {{ grade }}/100
-    </div>
-    {% else %}
-    <div class="alert alert-danger">
-        <b>Failed</b> Sorry, {{ user.first_name }}! You have failed exam with score {{ grade }}/100
-    </div>
-    <a class="btn btn-link text-danger" href="{% url 'onlinecourse:course_details' course.id %}">Re-test</a>
-    {% endif %}
+<div class="container mt-4">
     
-    <div class="card-columns-vertical mt-4">
-        <h5 class="card-title">Exam results</h5>
-        
-        {% for question in course.question_set.all %}
-        <div class="card mt-3">
-            <div class="card-header">
-                <h5>{{ question.content }}</h5>
-            </div>
-            <div class="card-body">
-                {% for choice in question.choice_set.all %}
-                    {% if choice.is_correct %}
-                        <p class="text-success">Correct answer: {{ choice.content }}</p>
-                    {% else %}
-                        {% if choice in submission.choices.all %}
-                            <p class="text-danger">Not selected: {{ choice.content }}</p>
-                        {% else %}
-                            <p>{{ choice.content }}</p>
-                        {% endif %}
-                    {% endif %}
-                {% endfor %}
-            </div>
+    {% if score_percent >= 80 %}
+        <div class="alert alert-success">
+            <b>Congratulations, {{ user.first_name }}!</b>
+            You passed the exam with score {{ score_percent }}/100.
         </div>
-        {% endfor %}
+    {% else %}
+        <div class="alert alert-danger">
+            <b>Failed!</b> Sorry {{ user.first_name }}, you scored {{ score_percent }}/100.
+        </div>
+        <a class="btn btn-outline-danger mb-3" href="{% url 'onlinecourse:course_details' course.id %}">
+            Retake Exam
+        </a>
+    {% endif %}
+
+    <h4 class="mt-4">Exam Results</h4>
+
+    {% for question in course.question_set.all %}
+    <div class="card mt-3">
+        <div class="card-header">
+            <h5>{{ question.content }}</h5>
+        </div>
+
+        <div class="card-body">
+            {% for choice in question.choice_set.all %}
+                <div class="
+                    {% if choice.is_correct %}
+                        alert alert-success
+                    {% elif choice.id in selected_ids %}
+                        alert alert-danger
+                    {% else %}
+                        alert alert-light
+                    {% endif %}
+                ">
+                    {{ choice.content }}
+                </div>
+            {% endfor %}
+        </div>
     </div>
+    {% endfor %}
 </div>
+
 </body>
 </html>
