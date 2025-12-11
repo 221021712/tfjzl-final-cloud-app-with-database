@@ -12,6 +12,8 @@ urlpatterns = [
     path('registration/', views.registration_request, name='registration'),
     path('login/', views.login_request, name='login'),
     path('logout/', views.logout_request, name='logout'),
+    path('course/<int:course_id>/submission/<int:submission_id>/result/', views.show_exam_result, name="exam_result"),
+    path('<int:course_id>/submit/', views.submit, name="submit"),
     # ex: /onlinecourse/5/
     path('<int:pk>/', views.CourseDetailView.as_view(), name='course_details'),
     # ex: /enroll/5/
