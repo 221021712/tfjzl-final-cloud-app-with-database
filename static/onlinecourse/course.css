@@ -175,3 +175,63 @@ input[type=text]:focus, input[type=password]:focus {
 .dropdown:hover .dropdown-content {display: block;}
 
 .dropdown:hover .dropbtn {background-color: darkblue;}
+/* Add these styles to course.css */
+
+/* Better card styling */
+.card {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border: 1px solid #e0e0e0;
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+/* Form styling */
+.form-check {
+    margin-bottom: 8px;
+}
+
+.form-check-input {
+    margin-right: 10px;
+}
+
+/* Button styling */
+.btn-block {
+    padding: 12px;
+    font-size: 16px;
+}
+
+/* Success and error messages */
+.alert-success {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}
+
+/* Exam results styling */
+.text-success {
+    color: #28a745 !important;
+    font-weight: bold;
+}
+
+.text-danger {
+    color: #dc3545 !important;
+}
+
+/* Course card styling */
+.card-deck .card {
+    transition: transform 0.2s;
+}
+
+.card-deck .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
